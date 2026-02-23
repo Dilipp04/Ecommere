@@ -26,13 +26,13 @@ const UpdateProduct = () => {
         );
 
         setProduct(response.data);
-      
+
         const responseImage = await axios.get(
           `http://localhost:8080/api/product/${id}/image`,
           { responseType: "blob" }
         );
-       const imageFile = await converUrlToFile(responseImage.data,response.data.imageName)
-        setImage(imageFile);     
+        const imageFile = await converUrlToFile(responseImage.data, response.data.imageName)
+        setImage(imageFile);
         setUpdateProduct(response.data);
       } catch (error) {
         console.error("Error fetching product:", error);
@@ -48,24 +48,24 @@ const UpdateProduct = () => {
 
 
 
-  const converUrlToFile = async(blobData, fileName) => {
+  const converUrlToFile = async (blobData, fileName) => {
     const file = new File([blobData], fileName, { type: blobData.type });
     return file;
   }
- 
-  const handleSubmit = async(e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("images", image)
-    console.log("productsdfsfsf", updateProduct)
+    console.log("product", updateProduct)
     const updatedProduct = new FormData();
     updatedProduct.append("imageFile", image);
     updatedProduct.append(
       "product",
       new Blob([JSON.stringify(updateProduct)], { type: "application/json" })
     );
-  
 
-  console.log("formData : ", updatedProduct)
+
+    console.log("formData : ", updatedProduct)
     axios
       .put(`http://localhost:8080/api/product/${id}`, updatedProduct, {
         headers: {
@@ -78,11 +78,11 @@ const UpdateProduct = () => {
       })
       .catch((error) => {
         console.error("Error updating product:", error);
-        console.log("product unsuccessfull update",updateProduct)
+        console.log("product unsuccessfull update", updateProduct)
         alert("Failed to update product. Please try again.");
       });
   };
- 
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -91,15 +91,15 @@ const UpdateProduct = () => {
       [name]: value,
     });
   };
-  
+
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
   };
-  
+
 
   return (
     <div className="update-product-container" >
-      <div className="center-container"style={{marginTop:"7rem"}}>
+      <div className="center-container" style={{ marginTop: "7rem" }}>
         <h1>Update Product</h1>
         <form className="row g-3 pt-1" onSubmit={handleSubmit}>
           <div className="col-md-6">
