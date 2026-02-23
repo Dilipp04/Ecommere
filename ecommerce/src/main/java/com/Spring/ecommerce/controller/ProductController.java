@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
@@ -99,5 +101,12 @@ public class ProductController {
         } else {
             return new ResponseEntity<>("Product not Found", HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("products/search")
+    public ResponseEntity<List<Product>> searchProduct(@RequestParam String keyword) {
+        System.out.println("keyword search for " + keyword);
+        List<Product> products = service.serarchProducts(keyword);
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 }

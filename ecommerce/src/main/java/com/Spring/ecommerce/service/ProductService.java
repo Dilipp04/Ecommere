@@ -40,4 +40,9 @@ public class ProductService {
     public void deleteProduct(int id) {
         repo.deleteById(id);
     }
+
+    public List<Product> serarchProducts(String keyword) {
+        keyword.toLowerCase();
+        return repo.searchProducts(keyword);
+    }
 }
