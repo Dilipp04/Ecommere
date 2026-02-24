@@ -1,0 +1,18 @@
+
+services:
+
+  backend:
+    build: ./ecommerce
+    ports:
+      - "8080:8080"
+    container_name: springboot-app
+    restart: always
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:80"
+    container_name: react-app
+    depends_on:
+      - backend
+    restart: always
